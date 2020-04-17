@@ -80,23 +80,11 @@ int main() {
     SDL_Init(SDL_INIT_VIDEO);
 
     // Setting the video mode to OpenGL stuff
-    // IDK IF I NEED ANY OF THIS. PLS SEND HELP
-    /*
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-    SDL_GL_SetAttribute( SDL_GL_ACCELERATED_VISUAL, 1 );
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8 );
-
-    //SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-    //SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-    //SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-    */
+    int result = SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
+    if (result != 0) {
+        printf("[Error - OpenGL]: Unable to use version 3.3 of OpenGL. Please update your drivers!\n");
+        printf("\tExiting with status code -3\n");
+    }
 
     // Create a window
     SDL_Window* window = NULL;
@@ -126,7 +114,7 @@ int main() {
     if(glew_status) {
         printf("[Error- GLEW]: Unable to initialize GLEW\n");
         printf("\tCode: %d\n", glew_status);
-        printf("\tExiting with status code -2\n");
+        printf("\tExiting with status code -2...\n");
         exit(-2);
     } // WE MUST CALL THIS FUNCTION OR ALL HELL WILL BREAK LOOSE
 
@@ -162,7 +150,7 @@ int main() {
         "layout(location = 0) out vec4 color;\n"
         "\n"
         "void main() {\n"
-        "   color = vec4(1.0, 0.0, 0.0, 1.0);\n"
+        "   color = vec4(0.0, 0.0, 1.0, 1.0);\n"
         "}\n";
 
     glDisable( GL_DEPTH_TEST );
@@ -203,6 +191,7 @@ int main() {
     }
 
     // Cleanup
+    glDeleteProgram(shader_program);
     SDL_GL_DeleteContext(gl_context);
     SDL_DestroyWindow(window);
     SDL_Quit();
