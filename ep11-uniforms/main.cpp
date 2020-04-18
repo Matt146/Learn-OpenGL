@@ -197,11 +197,19 @@ int main() {
     glDisable( GL_DEPTH_TEST );
     glClearColor( 0.0, 0.0, 0.0, 0.0 );
     glViewport( 0, 0, WIDTH, HEIGHT );
+    // Create shaders
     unsigned int shader_program = CreateShaderProgram(vertex_shader, fragment_shader);
     glUseProgram(shader_program);   // here we bind the shader by telling OpenGL to use this program
                                     // in order to use it the next time we glDrawArrays()
     int uniform_location = glGetUniformLocation(shader_program, "u_color"); // returns an int
     unsigned long long int frame_num = 0;
+
+    // WHAT WE NEED TO DO BEFORE WE DRAW: * = optional
+    // 1. VBO: Gen, bind, populate, a vertex buffer
+    // 2. VBO: Tell the GPU what type of data is in the vertex buffer with glVertexAttribPointer and glEnableVertexAttribArray
+    // 3. *IBO: Gen, bind, populate an index buffer
+    // 4. SHADERS: Create program, create shaders, compile shaders, attatch shaders, link program, validate program, glUseProgram to bind program
+    // 5. draw call using glDrawElements or glDrawArrays
 
     float r;
     float b = 1.0f;
