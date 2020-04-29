@@ -107,6 +107,7 @@ int main() {
     if (result != 0) {
         printf("[Error - OpenGL]: Unable to use version 3.3 of OpenGL. Please update your drivers!\n");
         printf("\tExiting with status code -3\n");
+        exit(-3);
     }
 
     // Create a window
